@@ -26,7 +26,7 @@ public class AdminPageActivity extends AppCompatActivity {
             String adminPassword = editTextAdminPassword.getText().toString().trim();
 
             if(adminName.equals("arda") && adminPassword.equals("arda12345")) {
-                 Intent intent = new Intent(AdminPageActivity.this, MainActivity.class);
+                 Intent intent = new Intent(AdminPageActivity.this, AdminActivity.class);
                  startActivity(intent);
 
                 Toast.makeText(AdminPageActivity.this, "Giriş başarılı!", Toast.LENGTH_SHORT).show();

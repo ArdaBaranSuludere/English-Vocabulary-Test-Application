@@ -3,9 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Üst bar için TextView -->
+    <TextView
+        android:id="@+id/upper_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6200EE"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="English Word Test"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <!-- ListView, TextView'in altında yer alacak şekilde ayarlandı -->
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/upper_bar"/>
 
 </RelativeLayout>

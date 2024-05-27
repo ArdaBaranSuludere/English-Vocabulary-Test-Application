@@ -1,0 +1,40 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/button_category1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spor" />
+
+    <Button
+        android:id="@+id/button_category2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mutfak" />
+
+    <Button
+        android:id="@+id/button_category3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Business" />
+
+    <Button
+        android:id="@+id/button_category4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Photography" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/questionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+</LinearLayout>

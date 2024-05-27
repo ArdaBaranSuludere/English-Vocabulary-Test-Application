@@ -1,8 +1,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <EditText
         android:id="@+id/editTextQuestion"
@@ -11,16 +12,16 @@
         android:hint="Question" />
 
     <EditText
-        android:id="@+id/editTextOption1"
+        android:id="@+id/editTextOptionA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Option 1" />
+        android:hint="Option A" />
 
     <EditText
-        android:id="@+id/editTextOption2"
+        android:id="@+id/editTextOptionB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Option 2" />
+        android:hint="Option B" />
 
     <EditText
         android:id="@+id/editTextCorrectAnswer"
@@ -28,14 +29,9 @@
         android:layout_height="wrap_content"
         android:hint="Correct Answer" />
 
-    <Spinner
-        android:id="@+id/spinnerCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <Button
-        android:id="@+id/buttonAddQuestion"
+        android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Question" />
+        android:text="Save" />
 </LinearLayout>

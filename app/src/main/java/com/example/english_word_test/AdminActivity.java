@@ -1,61 +1,74 @@
 package com.example.english_word_test;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StartGameActivity extends AppCompatActivity {
 
-    public Button button_showleaderboard;
+public class AdminActivity extends AppCompatActivity {
+
     private Map<String, List<Question>> questionBank;
-    private String username;
+    private LinearLayout questionLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_startgame);
+        setContentView(R.layout.activity_admin);
 
-        Intent intent_username = getIntent();
-        username = intent_username.getStringExtra("username"); // Kullanıcı adını alın
-
-        // Kategorileri ve soruları tanımla
+        // Initialize question bank (this should be the same question bank used in StartGameActivity)
         questionBank = new HashMap<>();
         questionBank.put("Spor", createCategory1Questions());
         questionBank.put("Mutfak", createCategory2Questions());
         questionBank.put("Business", createCategory3Questions());
         questionBank.put("Photography", createCategory4Questions());
 
-        // Butonları tanımla ve tıklama olaylarını dinle
-        findViewById(R.id.button_category1).setOnClickListener(view -> startQuiz("Spor"));
-        findViewById(R.id.button_category2).setOnClickListener(view -> startQuiz("Mutfak"));
-        findViewById(R.id.button_category3).setOnClickListener(view -> startQuiz("Business"));
-        findViewById(R.id.button_category4).setOnClickListener(view -> startQuiz("Photography"));
+        questionLayout = findViewById(R.id.questionLayout);
 
-        button_showleaderboard = findViewById(R.id.button_showleaderboard);
-        button_showleaderboard.setOnClickListener(view -> showLeaderboard());
+        // Set up category buttons
+        findViewById(R.id.button_category1).setOnClickListener(view -> displayQuestions("Spor"));
+        findViewById(R.id.button_category2).setOnClickListener(view -> displayQuestions("Mutfak"));
+        findViewById(R.id.button_category3).setOnClickListener(view -> displayQuestions("Business"));
+        findViewById(R.id.button_category4).setOnClickListener(view -> displayQuestions("Photography"));
     }
 
-    private void showLeaderboard() {
-        // Liderlik tablosunu göstermek için bir intent oluştur
-        Intent leaderboardIntent = new Intent(this, LeaderboardActivity.class);
-        startActivity(leaderboardIntent);
-    }
+    private void displayQuestions(String category) {
+        questionLayout.removeAllViews();
+        List<Question> questions = questionBank.get(category);
+        if (questions != null) {
+            for (Question question : questions) {
+                View questionView = getLayoutInflater().inflate(R.layout.question_item, null);
+                EditText editTextQuestion = questionView.findViewById(R.id.editTextQuestion);
+                EditText editTextOptionA = questionView.findViewById(R.id.editTextOptionA);
+                EditText editTextOptionB = questionView.findViewById(R.id.editTextOptionB);
+                EditText editTextCorrectAnswer = questionView.findViewById(R.id.editTextCorrectAnswer);
 
-    private void startQuiz(String category) {
-        Intent intent = new Intent(this, TestActivity.class);
-        intent.putExtra("category", category);
-        intent.putExtra("username", username); // Kullanıcı adını intent'e ekleyin
-        // List<Question>'ı doğrudan intent'e ekleyin
-        intent.putExtra("questions", (Serializable) questionBank.get(category));
-        startActivity(intent);
+                editTextQuestion.setText(question.getQuestionText());
+                editTextOptionA.setText(question.getOptionA());
+                editTextOptionB.setText(question.getOptionB());
+                editTextCorrectAnswer.setText(question.getCorrectAnswer());
+
+                Button buttonSave = questionView.findViewById(R.id.buttonSave);
+                buttonSave.setOnClickListener(v -> {
+                    question.setQuestionText(editTextQuestion.getText().toString());
+                    question.setOptionA(editTextOptionA.getText().toString());
+                    question.setOptionB(editTextOptionB.getText().toString());
+                    question.setCorrectAnswer(editTextCorrectAnswer.getText().toString());
+
+                    // Optionally, save the updated questions to persistent storage if needed
+                });
+
+                questionLayout.addView(questionView);
+            }
+        }
     }
 
     // Spor kategorisi için sorular

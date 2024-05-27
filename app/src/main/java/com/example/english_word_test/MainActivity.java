@@ -5,10 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

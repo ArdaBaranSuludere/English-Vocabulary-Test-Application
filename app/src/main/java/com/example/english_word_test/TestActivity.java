@@ -14,17 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
-    private TextView questionTextView;
-    private TextView scoreTextView;
-    private Button ansAButton;
-    private Button ansBButton;
-    private Button submitButton;
+    private TextView questionTextView, scoreTextView;
+    private Button ansAButton, ansBButton, submitButton, selectedButton;
     private List<Question> questions;
     private int currentQuestionIndex = 0;
     private int score = 0;
     private String correctAnswer;
-    private Button selectedButton;
     private MediaPlayer mediaPlayer;
+    public String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +34,13 @@ public class TestActivity extends AppCompatActivity {
         ansBButton = findViewById(R.id.ans_B);
         submitButton = findViewById(R.id.submit_button);
 
+        Intent intent_username = getIntent();
+        username = intent_username.getStringExtra("username");
+
         // Intent ile gelen verileri alma
-        Intent intent = getIntent();
-        String category = intent.getStringExtra("category");
-        questions = (List<Question>) intent.getSerializableExtra("questions");
+        Intent intent_category = getIntent();
+        String category = intent_category.getStringExtra("category");
+        questions = (List<Question>) intent_category.getSerializableExtra("questions");
 
         // İlk soruyu gösterme
         if (questions != null && !questions.isEmpty()) {
@@ -83,7 +83,7 @@ public class TestActivity extends AppCompatActivity {
                 }
             }
 
-            scoreTextView.setText("Score: " + score + "/" + (currentQuestionIndex+1)); // Skor / toplam soru sayısı olarak güncellendi
+            scoreTextView.setText("Score: " + score + "/" + (currentQuestionIndex + 1)); // Skor / toplam soru sayısı olarak güncellendi
 
             // Belirli bir süre sonra bir sonraki soruyu göster
             new Handler().postDelayed(this::nextQuestion, 2000);
@@ -103,9 +103,30 @@ public class TestActivity extends AppCompatActivity {
             ansBButton.setBackgroundColor(Color.WHITE);
             selectedButton = null;
         } else {
-            Toast.makeText(this, "Quiz Finished! Your score: " + score, Toast.LENGTH_LONG).show();
-            // Quiz bittiğinde yapılacak işlemler
-            finishQuiz();
+            // Sorular bittiğinde, kullanıcının skorunu veritabanına kaydet
+            try {
+                LoginDatabaseHelper loginDbHelper = new LoginDatabaseHelper(this);
+                if (username != null) {
+                    if (correctAnswer != null && !correctAnswer.isEmpty()) {
+                        // Doğru cevap sayısını kaydet ve mesajı göster
+                        loginDbHelper.updateScore(username, score);
+                        Toast.makeText(TestActivity.this, "Doğrular kaydedildi: " + score,  Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Doğru soru sayısını boş olarak yazdır
+                        Toast.makeText(TestActivity.this, "Doğru soru sayısı: " + score,  Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Kullanıcı adı boş ise, bu durumu ele al
+                    Toast.makeText(TestActivity.this, "Kullanıcı adı boş: ",  Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(TestActivity.this, "Doğrular kaydedilemedi" , Toast.LENGTH_SHORT).show();
+                // Burada hatanın nasıl ele alınacağına ilişkin bir kod bloğu yazabilirsiniz.
+            }
+            // Toast.makeText(TestActivity.this, "Sorular bitti! Skorunuz kaydedildi.", Toast.LENGTH_SHORT).show(); //
+            Intent intent2 = new Intent(TestActivity.this, StartGameActivity.class);
+            startActivity(intent2);
         }
     }
 

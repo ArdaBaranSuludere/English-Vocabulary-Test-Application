@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Englishwordtest"
         tools:targetApi="31">
         <activity
-            android:name=".StartGameActivity"
+            android:name=".LoginPageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".TestActivity"
-            android:label="Test Activity"/>
+
+        <activity android:name=".TestActivity"/>
+        <activity android:name=".RegisterPageActivity"/>
+        <activity android:name=".AdminPageActivity"/>
+        <activity android:name=".StartGameActivity"/>
+        <activity android:name=".LeaderboardActivity"/>
+
     </application>
 
 </manifest>

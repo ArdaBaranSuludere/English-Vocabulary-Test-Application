@@ -16,11 +16,15 @@ public class StartGameActivity extends AppCompatActivity {
 
     public Button button_showleaderboard;
     private Map<String, List<Question>> questionBank;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startgame);
+
+        Intent intent_username = getIntent();
+        username = intent_username.getStringExtra("username"); // Kullanıcı adını alın
 
         // Kategorileri ve soruları tanımla
         questionBank = new HashMap<>();
@@ -48,6 +52,7 @@ public class StartGameActivity extends AppCompatActivity {
     private void startQuiz(String category) {
         Intent intent = new Intent(this, TestActivity.class);
         intent.putExtra("category", category);
+        intent.putExtra("username", username); // Kullanıcı adını intent'e ekleyin
         // List<Question>'ı doğrudan intent'e ekleyin
         intent.putExtra("questions", (Serializable) questionBank.get(category));
         startActivity(intent);

@@ -38,10 +38,6 @@ public class LoginPageActivity extends AppCompatActivity {
             if (loginDatabaseHelper.checkUser(username, password)) {    // Giriş başarılıysa, StartGameActivity'yi başlat
                 Toast.makeText(LoginPageActivity.this, "Giriş Başarılı!", Toast.LENGTH_SHORT).show();
 
-                Intent intent1 = new Intent(LoginPageActivity.this, TestActivity.class);
-                intent1.putExtra("username", username);
-                startActivity(intent1);
-
                 Intent intent = new Intent(LoginPageActivity.this, StartGameActivity.class);
                 intent.putExtra("username", username);
                 startActivity(intent);

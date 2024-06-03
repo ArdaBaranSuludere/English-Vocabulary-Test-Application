@@ -125,8 +125,7 @@ public class TestActivity extends AppCompatActivity {
                 // Burada hatanın nasıl ele alınacağına ilişkin bir kod bloğu yazabilirsiniz.
             }
             // Toast.makeText(TestActivity.this, "Sorular bitti! Skorunuz kaydedildi.", Toast.LENGTH_SHORT).show(); //
-            Intent intent2 = new Intent(TestActivity.this, StartGameActivity.class);
-            startActivity(intent2);
+            finishQuiz();
         }
     }
 
@@ -138,6 +137,7 @@ public class TestActivity extends AppCompatActivity {
     private void finishQuiz() {
         // Quiz bittiğinde skor kaydetme işlemleri
         Intent intent = new Intent(TestActivity.this, StartGameActivity.class);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
